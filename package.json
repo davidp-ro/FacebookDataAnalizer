@@ -1,0 +1,21 @@
+{
+    "name": "facebook-data-analizer",
+    "version": "1.0.0",
+    "description": "Quick way of seeing and analyzing the data Facebook has about you",
+    "main": "main.js",
+    "scripts": {
+        "start": "electron src/main.js"
+    },
+    "repository": "https://github.com/davidp-ro/FacebookDataAnalizer",
+    "keywords": [
+        "Electron",
+        "facebook",
+        "data",
+        "analizer"
+    ],
+    "author": "David Pescariu",
+    "license": "GPL-3.0",
+    "devDependencies": {
+        "electron": "^10.1.2"
+    }
+}
