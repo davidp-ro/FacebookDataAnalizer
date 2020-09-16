@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="https://github.com/davidp-ro/FacebookDataAnalizer">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/about_you.css">
+    <title>Facebook Data Analizer</title>
+</head>
+
+<body onload="loadData()">
+    <div class="sidenav">
+        <img class="icon" title="Home" src="../../res/dashboard.svg" onclick="window.location.href = '../index.html'">
+
+        <button class="sidenav-button active" onclick="window.location.href = 'about_you.html'">About you</button><br>
+        <button class="sidenav-button" onclick="window.location.href = 'ads_bussiness.html'">Advertisments</button><br>
+        <button class="sidenav-button" onclick="window.location.href = 'apps.html'">Apps and Websites</button><br>
+
+        <button class="sidenav-button" onclick="window.location.href = 'about.html'">About</button><br>
+    </div>
+
+    <div id="loader"></div>
+
+    <div id="main" style="display: none;">
+        <h1>About You</h1>
+    </div>
+
+    <script src="js/about_you.js"></script>
+</body>
+
+</html>

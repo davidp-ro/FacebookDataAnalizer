@@ -1,0 +1,68 @@
+:root {
+    background-color: #121212;
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+p,
+a,
+button {
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: #d2d2d2;
+    text-decoration: none;
+}
+
+.sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    background-image: linear-gradient(to bottom right, #272727, #353535);
+}
+
+.icon {
+    width: 100px;
+    height: 100px;
+    margin: 25px;
+    border-radius: 10%;
+    transition-delay: 200ms;
+}
+
+.icon:hover {
+    background-color: #272727;
+}
+
+.sidenav-button {
+    margin-top: 3px;
+    width: fit-content;
+    border: none;
+    border-radius: 3%;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 600;
+    background-color: #353535;
+    transition-duration: 200ms;
+}
+
+.sidenav-button:hover {
+    background-color: #272727;
+}
+
+.active {
+    color: #127AFC;
+}
+
+.main {
+    margin-left: 22%;
+}
