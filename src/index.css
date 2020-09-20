@@ -1,68 +1,40 @@
 :root {
-    background-color: #121212;
-    margin: 0;
-    padding: 0;
+    background-color: #C0C0C0;
 }
 
-h1,
-h2,
-p,
-a,
-button {
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: #d2d2d2;
-    text-decoration: none;
+.sidebar {
+    width: 18%;
+    background-color: #E9EBEE;
+    box-shadow: 0px 0px 18px #888888;
 }
 
-.sidenav {
-    height: 100%;
-    width: 15%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    margin: 0;
+.logo {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    overflow: hidden;
-    background-image: linear-gradient(to bottom right, #272727, #353535);
+    justify-content: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
 }
 
-.icon {
-    width: 100px;
-    height: 100px;
-    margin: 25px;
-    border-radius: 10%;
-    transition-delay: 200ms;
+.logo img {
+    transition-duration: 250ms;
 }
 
-.icon:hover {
-    background-color: #272727;
-}
-
-.sidenav-button {
-    margin-top: 3px;
-    width: fit-content;
-    border: none;
-    border-radius: 3%;
-    padding: 10px 20px;
-    text-align: center;
-    display: inline-block;
-    font-size: 14px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 600;
-    background-color: #353535;
-    transition-duration: 200ms;
-}
-
-.sidenav-button:hover {
-    background-color: #272727;
-}
-
-.active {
-    color: #127AFC;
+.header {
+    margin-left: 18%;
+    background-color: #E9EBEE;
+    color: #4267B2;
+    box-shadow: 0px 0px 18px #888888;
 }
 
 .main {
-    margin-left: 22%;
+    margin-left: 20%;
+    margin-right: 0;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 25%;
+    text-align: center;
 }

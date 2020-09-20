@@ -1,35 +1,41 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
-function createWindow() {
-    // Create the browser window.
-    const mainWindow = new BrowserWindow({
-        width: 1366,
-        height: 768,
-        title: 'Facebook Data Analizer',
-        autoHideMenuBar: true,
-        resizable: false,
-        webPreferences: {
-            preload: path.join(__dirname, 'preload.js'),
-            nodeIntegration: true,
-        }
-    })
-
-    mainWindow.loadFile('index.html')
-
-    // DEBUG: Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+    app.quit();
 }
 
-// Called after Electron finished loading and is ready to render pages
-app.whenReady().then(() => {
-    createWindow()
+const createWindow = () => {
+    // Create the window.
+    const mainWindow = new BrowserWindow({
+        width: 1336,
+        height: 768,
+        resizable: false,
+        autoHideMenuBar: true,
+        icon: __dirname + '/res/icon_128x128.ico',
+        webPreferences: {
+            nodeIntegration: true,
+        }
+    });
 
-    app.on('activate', function() {
-        if (BrowserWindow.getAllWindows().length === 0) createWindow()
-    })
-})
+    // Load index.html
+    mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
-app.on('window-all-closed', function() {
-    if (process.platform !== 'darwin') app.quit()
-})
+    // Open the DevTools at startup.
+    // mainWindow.webContents.openDevTools();
+};
+
+app.on('ready', createWindow);
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit();
+    }
+});
+
+app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow();
+    }
+});

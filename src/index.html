@@ -3,29 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="https://github.com/davidp-ro/FacebookDataAnalizer">
+    <meta name="description" content="Visualize your facebook data">
+
+    <title>Facebook Data Visualizer</title>
+    <link rel="manifest" href="manifest.json">
+
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="w3.css">
     <link rel="stylesheet" href="index.css">
-    <title>Facebook Data Analizer</title>
 </head>
 
 <body>
-    <div class="sidenav">
-        <img class="icon" title="Home" src="../res/dashboard.svg" onclick="window.location.href = '../index.html'">
-
-        <button class="sidenav-button" onclick="window.location.href = 'pages/about_you.html'">About you</button><br>
-        <button class="sidenav-button" onclick="window.location.href = 'pages/ads_bussiness.html'">Advertisments</button><br>
-        <button class="sidenav-button" onclick="window.location.href = 'pages/apps.html'">Apps and Websites</button><br>
-
-        <button class="sidenav-button" onclick="window.location.href = 'pages/about.html'">About</button><br>
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block sidebar">
+        <div class="logo">
+            <img id="homeBtn" class="w3-hover-grayscale" src="res/icon.svg" alt="Logo" title="Home" width="100" height="100">
+        </div>
+        <button id="aboutYouBtn" class="w3-bar-item w3-button">About You</button>
+        <button id="adsBtn" class="w3-bar-item w3-button">Advertisments</button>
+        <button id="appsBtn" class="w3-bar-item w3-button">Apps and Websites</button>
     </div>
 
-    <div class="main">
-        <h1>Initial commit</h1>
+    <!-- Page title -->
+    <div id="title" class="w3-container header">
+        <h1>Facebook Data Visualizer</h1>
     </div>
 
-    <script src="./renderer.js"></script>
+    <!-- Page contents -->
+    <div id="mainPage" class="main">
+        <h4>Loading...</h4>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w3-opacity">
+        <p>Facebook Data Visualizer is not associatted with or endorsed by Facebook Inc. in any shape or form. This project is on Github <a href="https://github.com/davidp-ro/FacebookDataVisualizer">here</a></p>
+    </footer>
+
+    <script src="index.js"></script>
 </body>
 
 </html>
