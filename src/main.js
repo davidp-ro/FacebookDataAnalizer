@@ -1,10 +1,24 @@
-const { app, BrowserWindow } = require('electron');
+const { dir } = require('console');
+const { app, dialog, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
+const { title } = require('process');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
     app.quit();
 }
+
+ipcMain.on('selectDataDir', async(event, args) => {
+    let dataDir = await dialog.showOpenDialog({
+        title: 'Select the folder containing your facebook data',
+        properties: ['openDirectory']
+    });
+    event.sender.send('setDataDir', dataDir);
+});
+
+ipcMain.on('showWarning', (event, args) => {
+    dialog.showErrorBox(args.title, args.content);
+})
 
 const createWindow = () => {
     // Create the window.
