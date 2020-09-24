@@ -1,66 +1,46 @@
 const ipcRenderer = require('electron').ipcRenderer;
+const fs = require('fs');
+const isValidDataFolder = require('./utils/isValidDataFolder');
 
 let dir; // Main data directory, to be saved in the config file.
 
 /**
- * Listening for when the user selects a folder
+ * Listening for when the user selects a folder, and saves the config in a file
+ * 
+ * Default configs:
+ *  dataPath : data directory path
+ *  ignoredFolders : [], empty list
  * 
  * Shows warning if user still hasn't selected a folder (or folder is invalid)
  */
 ipcRenderer.on('setDataDir', (event, args) => {
-    if (args.canceled === false && isValidFolder(args.filePaths[0])) {
+    if (args.canceled === false && isValidDataFolder.isValidFolder(args.filePaths[0])) {
         dir = args.filePaths[0];
         console.log("[✔] " + dir + " is now the data directory");
-        loadNormalHome();
+        let config = {
+            "dataPath": dir,
+            "ignoredFolders": []
+        }
+        ipcRenderer.send('saveConfig', config);
+        loadNormalHome(config);
     } else {
         ipcRenderer.send('showWarning', {
-            "title": "Error",
-            "content": "You must select a data directory!"
+            "title": "You must select a data directory!",
+            "content": "It's the one that contains the data downloaded from your account"
         })
     }
 });
 
 /**
- * Check if the given folder from setDataDir is a valid one
- * 
- * @param {Given folder path} folder 
- * 
- * @returns {true} if it is.
- * @returns {false} if it's not.
+ * Load the page
  */
-const isValidFolder = (folder) => {
-    const fs = require('fs');
-    const path = require('path');
-    const checked_folders = ['about_you', 'ads_and_businesses', 'apps_and_websites']
-    let is_valid = true;
+const loadHome = async() => {
+    let config;
 
-    checked_folders.forEach(checked_folder => {
-        if (!fs.existsSync(path.join(folder, checked_folder))) {
-            is_valid = false;
-            return;
-        }
+    ipcRenderer.on('setConfig', (event, args) => {
+        config = args.config;
     });
 
-    return is_valid;
-}
-
-/**
- * Reads / Checks the config file
- * 
- * @returns {null} file does not exist
- * @returns {JSON} JSON Object if it exists
- */
-const readConfig = () => {
-    try {
-        const file = require('./config.json');
-        return file;
-    } catch (e) {
-        console.warn(e.message);
-        return null;
-    }
-}
-
-const loadHome = async() => {
     changeTitle();
 
     const page = document.getElementById('mainPage');
@@ -68,7 +48,12 @@ const loadHome = async() => {
     page.style.alignContent = 'center';
     page.style.justifyContent = 'center';
 
-    let config = readConfig();
+    try {
+        // To get the config
+        ipcRenderer.send('getConfig');
+    } catch (e) {
+        console.warn("Could not get config! Exception: " + e.message);
+    }
 
     if (config === null) {
         // Show the 'no config found' card
@@ -82,7 +67,7 @@ const loadHome = async() => {
             await ipcRenderer.send('selectDataDir');
         });
     } else {
-        loadNormalHome();
+        loadNormalHome(config);
     }
 }
 
@@ -91,9 +76,25 @@ const changeTitle = () => {
     title.innerHTML = '<h1>Facebook Data Visualizer</h1>'
 }
 
-const loadNormalHome = () => {
+/**
+ * Load the normal homepage
+ * 
+ * @param {Config object} config 
+ */
+const loadNormalHome = (config) => {
     const page = document.getElementById('mainPage');
-    page.innerHTML = '<h3> Data directory is: ' + dir + '</h3>';
+    page.innerHTML = "";
+    generateIgnoredFoldersCard(page, config);
+}
+
+/* Dynamic elements */
+
+const generateIgnoredFoldersCard = (page, config) => {
+    if (config.ignoredFolders.length == 0) {
+        page.innerHTML += noIgnoredFoldersCard;
+    } else {
+        page.innerHTML += "abc";
+    }
 }
 
 /* Static elements */
@@ -111,5 +112,18 @@ const noConfigCard = '\
 <button id="selectDataFolder" class="w3-button w3-block w3-dark-grey">Select folder</button>\
 </div>\
 ' // End of configCard
+
+const noIgnoredFoldersCard = '\
+<div id="noIgnoredFolders" class="w3-card-4" style="width:100%">\
+    <header class="w3-container w3-light-grey">\
+        <h3>Will scan all folders available</h3>\
+    </header>\
+    <div class="w3-container" style="margin-top: 12px;">\
+        <i class="material-icons w3-left w3-circle w3-margin-right" style="color:#3BCEBC; font-size: 48px;">info</i>\
+        <p>Do you want to ignore a folder? Add it to the ignored folders list in the config</p><br>\
+    </div>\
+    <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore a Folder</button>\
+</div>\
+' // End of noIgnoredFoldersCard
 
 exports.loadHome = loadHome;
