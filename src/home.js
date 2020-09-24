@@ -3,6 +3,12 @@ const fs = require('fs');
 const isValidDataFolder = require('./utils/isValidDataFolder');
 
 let dir; // Main data directory, to be saved in the config file.
+let config; // Config object
+
+ipcRenderer.send('getConfig')
+ipcRenderer.on('loadConfig', (event, args) => {
+    config = args.config;
+});
 
 /**
  * Listening for when the user selects a folder, and saves the config in a file
@@ -17,12 +23,14 @@ ipcRenderer.on('setDataDir', (event, args) => {
     if (args.canceled === false && isValidDataFolder.isValidFolder(args.filePaths[0])) {
         dir = args.filePaths[0];
         console.log("[✔] " + dir + " is now the data directory");
-        let config = {
+        config = {
             "dataPath": dir,
             "ignoredFolders": []
         }
-        ipcRenderer.send('saveConfig', config);
-        loadNormalHome(config);
+        ipcRenderer.send('saveConfig', {
+            "config": config
+        });
+        loadNormalHome();
     } else {
         ipcRenderer.send('showWarning', {
             "title": "You must select a data directory!",
@@ -35,12 +43,6 @@ ipcRenderer.on('setDataDir', (event, args) => {
  * Load the page
  */
 const loadHome = async() => {
-    let config;
-
-    ipcRenderer.on('setConfig', (event, args) => {
-        config = args.config;
-    });
-
     changeTitle();
 
     const page = document.getElementById('mainPage');
@@ -48,14 +50,7 @@ const loadHome = async() => {
     page.style.alignContent = 'center';
     page.style.justifyContent = 'center';
 
-    try {
-        // To get the config
-        ipcRenderer.send('getConfig');
-    } catch (e) {
-        console.warn("Could not get config! Exception: " + e.message);
-    }
-
-    if (config === null) {
+    if (config === null || config === undefined) {
         // Show the 'no config found' card
         page.innerHTML = noConfigCard;
         const _noConfigCard = document.getElementById('noConfigFound');
@@ -67,7 +62,7 @@ const loadHome = async() => {
             await ipcRenderer.send('selectDataDir');
         });
     } else {
-        loadNormalHome(config);
+        loadNormalHome();
     }
 }
 
@@ -78,18 +73,16 @@ const changeTitle = () => {
 
 /**
  * Load the normal homepage
- * 
- * @param {Config object} config 
  */
-const loadNormalHome = (config) => {
+const loadNormalHome = () => {
     const page = document.getElementById('mainPage');
     page.innerHTML = "";
-    generateIgnoredFoldersCard(page, config);
+    generateIgnoredFoldersCard(page);
 }
 
 /* Dynamic elements */
 
-const generateIgnoredFoldersCard = (page, config) => {
+const generateIgnoredFoldersCard = (page) => {
     if (config.ignoredFolders.length == 0) {
         page.innerHTML += noIgnoredFoldersCard;
     } else {

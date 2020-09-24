@@ -1,22 +1,28 @@
 const { app, dialog, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 
+/**
+ * Docs
+ * 
+ *  Load the config:
+ *      ipcRenderer.send('getConfig')
+ *      ipcRenderer.on('loadConfig', (event, args) => {
+ *         config = args.config;
+ *      });
+ */
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
     app.quit();
 }
 
-class Config {
-    Config(config) {
-        this.dataPath = config.dataPath;
-        this.ignoredFolders = config.ignoredFolders;
-    }
-}
+// Event Calls
 
-let config = null;
-
-// IPC Calls
-
+/**
+ * Open the dialog so that the user can select the data directory
+ * 
+ * Sends an event (setDataDir) to set the directory
+ */
 ipcMain.on('selectDataDir', async(event, args) => {
     let dataDir = await dialog.showOpenDialog({
         title: 'Select the folder containing your facebook data',
@@ -25,22 +31,30 @@ ipcMain.on('selectDataDir', async(event, args) => {
     event.sender.send('setDataDir', dataDir);
 });
 
+/**
+ * Show an error box
+ * 
+ * @param {title} : Box title
+ * @param {content} : Box message
+ */
 ipcMain.on('showWarning', (event, args) => {
     dialog.showErrorBox(args.title, args.content);
 })
 
-ipcMain.on('setConfig', (event, args) => {
-    setConfig(args.config)
+/**
+ * Save the config
+ * 
+ * @param {config} : config to save
+ */
+ipcMain.on('saveConfig', (event, args) => {
+    config = args.config;
+    saveConfig();
 });
 
 /**
- * @throws {Config is null} If the config couldn't be read
+ * Config
  */
-ipcMain.on('getConfig', (event, args) => {
-    if (config != null) {
-        event.sender.send('setConfig', config);
-    } else throw ("Config is null");
-});
+let config = null;
 
 /**
  * Reads / Checks the config file
@@ -53,54 +67,42 @@ const readConfig = () => {
         const file = require('./config.json');
         return file;
     } catch (e) {
-        console.warn(e.message);
+        if (e.message.startsWith('Cannot find')) {
+            console.log('No config file found.');
+        } else {
+            console.warn(e.message);
+        }
         return null;
     }
 }
 
 /**
- * Save a new config
+ * Saves the config present in the config object
  * 
- * Deletes (if present) the config instance, and starts a new one, and saves the
- * config to config.json
- * 
- * @param {Config object (optional, defaults to null)} _config  
+ * @throws {The config is null, will not be saved!} if config is null or undefined
  */
-const setConfig = (_config = null) => {
-    const saveConfig = (configToSave) => {
+const saveConfig = () => {
+    if (config === null || config === undefined) {
+        throw new Error("The config is null, will not be saved!");
+    } else {
         const fs = require('fs');
-        fs.writeFile('./src/config.json', JSON.stringify(configToSave, null, 4), () => {
+        fs.writeFile('./src/config.json', JSON.stringify(config, null, 4), () => {
             console.log("[✔] Saved the new config");
         });
-    }
-
-    if (_config == null) {
-        let cfg = readConfig();
-        if (cfg == null) {
-            return;
-        } else {
-            try {
-                delete(config);
-            } catch (e) {
-                console.error(e);
-            } finally {
-                config = new Config(cfg);
-                saveConfig(config);
-            }
-        }
-    } else {
-        try {
-            delete(config);
-        } catch (e) {
-            console.error(e);
-        } finally {
-            config = new Config(_config);
-            saveConfig(config);
-        }
     }
 }
 
 const createWindow = () => {
+    // Read config, will be null if non-existant
+    config = readConfig();
+
+    // Send the config to requests
+    ipcMain.on('getConfig', (event, args) => {
+        event.sender.send('loadConfig', {
+            "config": config
+        });
+    });
+
     // Create the window.
     const mainWindow = new BrowserWindow({
         width: 1336,
@@ -117,7 +119,7 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     // Open the DevTools at startup.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', createWindow);
