@@ -78,6 +78,10 @@ const loadNormalHome = () => {
     const page = document.getElementById('mainPage');
     page.innerHTML = "";
     generateIgnoredFoldersCard(page);
+    const ignoreBtn = document.getElementById('howToIgnoreFolder');
+    ignoreBtn.addEventListener('click', () => {
+        // TODO: Show a help page
+    })
 }
 
 /* Dynamic elements */
@@ -86,37 +90,58 @@ const generateIgnoredFoldersCard = (page) => {
     if (config.ignoredFolders.length == 0) {
         page.innerHTML += noIgnoredFoldersCard;
     } else {
-        page.innerHTML += "abc";
+        let ignoredFoldersString = "";
+        for (let index = 0; index < config.ignoredFolders.length; ++index) {
+            let folder = config.ignoredFolders[index].replace('_', ' ');
+            // Camel case:
+            ignoredFoldersString += folder.charAt(0).toUpperCase();
+            ignoredFoldersString += folder.substr(1).toLowerCase();
+            // Put a comma if element is not the last one
+            ignoredFoldersString += (index == (config.ignoredFolders.length - 1)) ? '' : '?';
+        }
+        let ignoredFoldersCard = (`
+        <div id="ignoredFolders" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
+            <header class="w3-container w3-light-grey" style="text-align: center;">
+                <h3>You have set some folders to ignore: </h3>
+            </header>
+            <div class="w3-container" style="margin-top: 12px;">
+                <i class="material-icons w3-left w3-circle w3-margin-right" style="color:#3BCEBC; font-size: 48px;">info</i>
+                <p>The ignored folders are: ${ignoredFoldersString}</p><br>
+            </div>
+            <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore / Un-Ignore a Folder</button>
+        </div>
+        `);
+        page.innerHTML += ignoredFoldersCard;
     }
 }
 
 /* Static elements */
 
-const noConfigCard = '\
-<div id="noConfigFound" class="w3-card-4" style="width:550px">\
-<header class="w3-container w3-light-grey">\
-    <h3>No config file found</h3>\
-</header>\
-<div class="w3-container" style="margin-top: 12px;">\
-    <i class="material-icons w3-left w3-circle w3-margin-right" style="color: #FB8C00; font-size: 48px;">warning</i>\
-    <p>You need to select the folder that contains the downloaded data</p><br>\
-</div>\
-<button id="howToDownloadData" class="w3-button w3-block w3-dark-grey">How To Download your data from Facebook</button>\
-<button id="selectDataFolder" class="w3-button w3-block w3-dark-grey">Select folder</button>\
-</div>\
-' // End of configCard
+const noConfigCard = (`
+<div id="noConfigFound" class="w3-card-4" style="width:550px">
+<header class="w3-container w3-light-grey">
+    <h3>No config file found</h3>
+</header>
+<div class="w3-container" style="margin-top: 12px;">
+    <i class="material-icons w3-left w3-circle w3-margin-right" style="color: #FB8C00; font-size: 48px;">warning</i>
+    <p>You need to select the folder that contains the downloaded data</p><br>
+</div>
+<button id="howToDownloadData" class="w3-button w3-block w3-dark-grey">How To Download your data from Facebook</button>
+<button id="selectDataFolder" class="w3-button w3-block w3-dark-grey">Select folder</button>
+</div>
+`); // End of configCard
 
-const noIgnoredFoldersCard = '\
-<div id="noIgnoredFolders" class="w3-card-4" style="width:100%">\
-    <header class="w3-container w3-light-grey">\
-        <h3>Will scan all folders available</h3>\
-    </header>\
-    <div class="w3-container" style="margin-top: 12px;">\
-        <i class="material-icons w3-left w3-circle w3-margin-right" style="color:#3BCEBC; font-size: 48px;">info</i>\
-        <p>Do you want to ignore a folder? Add it to the ignored folders list in the config</p><br>\
-    </div>\
-    <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore a Folder</button>\
-</div>\
-' // End of noIgnoredFoldersCard
+const noIgnoredFoldersCard = (`
+<div id="noIgnoredFolders" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
+    <header class="w3-container w3-light-grey" style="text-align: center;">
+        <h3>Will scan all folders available</h3>
+    </header>
+    <div class="w3-container" style="margin-top: 12px;">
+        <i class="material-icons w3-left w3-circle w3-margin-right" style="color:#3BCEBC; font-size: 48px;">info</i>
+        <p>Do you want to ignore a folder? Add it to the ignored folders list in the config</p><br>
+    </div>
+    <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore a Folder</button>
+</div>
+`); // End of noIgnoredFoldersCard
 
 exports.loadHome = loadHome;

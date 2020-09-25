@@ -68,7 +68,7 @@ const readConfig = () => {
         return file;
     } catch (e) {
         if (e.message.startsWith('Cannot find')) {
-            console.log('No config file found.');
+            console.log('No config file found, showing prompt!');
         } else {
             console.warn(e.message);
         }
@@ -119,7 +119,7 @@ const createWindow = () => {
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     // Open the DevTools at startup.
-    mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 };
 
 app.on('ready', createWindow);
