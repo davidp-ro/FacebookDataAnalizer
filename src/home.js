@@ -47,8 +47,10 @@ const loadHome = async() => {
 
     const page = document.getElementById('mainPage');
     page.style.display = 'flex';
+    page.style.flexDirection = 'column';
     page.style.alignContent = 'center';
     page.style.justifyContent = 'center';
+    page.style.marginRight = '2%';
 
     if (config === null || config === undefined) {
         // Show the 'no config found' card
@@ -74,7 +76,7 @@ const changeTitle = () => {
 /**
  * Load the normal homepage
  */
-const loadNormalHome = () => {
+const loadNormalHome = async() => {
     const page = document.getElementById('mainPage');
     page.innerHTML = "";
     generateIgnoredFoldersCard(page);
@@ -82,6 +84,18 @@ const loadNormalHome = () => {
     ignoreBtn.addEventListener('click', () => {
         // TODO: Show a help page
     })
+    news = await getNews();
+    generateNewsCard(page, news);
+}
+
+/**
+ * Get the latest news from the repo
+ * 
+ * @returns {JSON Object} with the news
+ */
+const getNews = async() => {
+    news = await fetch('https://raw.githubusercontent.com/davidp-ro/FacebookDataVisualizer/master/news.json');
+    return news.json();
 }
 
 /* Dynamic elements */
@@ -113,6 +127,26 @@ const generateIgnoredFoldersCard = (page) => {
         `);
         page.innerHTML += ignoredFoldersCard;
     }
+
+    page.innerHTML += '<br>';
+}
+
+const generateNewsCard = (page, news) => {
+    let date = new Date(news.updated_on).toString().substr(0, 21);
+    const newsCard = (`
+    <div id="newsCard" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
+        <header class="w3-container w3-light-grey" style="text-align: center;">
+            <h3>Latest news</h3>
+        </header>
+        <div class="w3-container" style="margin-top: 12px;">
+            <h5>${news.text}<h5><br>
+            <small>Last updated on ${date}</small>
+        </div>
+    </div>
+
+    <br>
+    `);
+    page.innerHTML += newsCard;
 }
 
 /* Static elements */

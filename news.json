@@ -2,5 +2,6 @@
     "updated_on": 1601054108922,
     "isImportant": false,
     "image": "null",
-    "text": "News Test"
+    "title": "News Test",
+    "toRender": "<ul><li>News item 1</li><li>News item 2</li></ul>"
 }

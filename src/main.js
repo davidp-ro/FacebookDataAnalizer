@@ -60,7 +60,7 @@ let config = null;
  * Reads / Checks the config file
  * 
  * @returns {null} file does not exist
- * @returns {JSON} JSON Object if it exists
+ * @returns {JSON Object} if it exists
  */
 const readConfig = () => {
     try {
