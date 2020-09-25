@@ -139,7 +139,8 @@ const generateNewsCard = (page, news) => {
             <h3>Latest news</h3>
         </header>
         <div class="w3-container" style="margin-top: 12px;">
-            <h5>${news.text}<h5><br>
+            <h5>${news.title}<h5>
+            ${news.toRender}<br>
             <small>Last updated on ${date}</small>
         </div>
     </div>

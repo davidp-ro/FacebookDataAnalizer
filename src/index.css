@@ -2,6 +2,10 @@
     background-color: #C0C0C0;
 }
 
+li {
+    font-size: 16px;
+}
+
 .sidebar {
     width: 18%;
     background-color: #E9EBEE;
