@@ -1,6 +1,6 @@
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
-const isValidDataFolder = require('./utils/isValidDataFolder');
+const isValidDataFolder = require('../utils/isValidDataFolder');
 
 let dir; // Main data directory, to be saved in the config file.
 let config; // Config object
@@ -153,7 +153,7 @@ const generateNewsCard = (page, news) => {
 /* Static elements */
 
 const noConfigCard = (`
-<div id="noConfigFound" class="w3-card-4" style="width:550px">
+<div id="noConfigFound" class="w3-card-4 w3-margin-left w3-margin-right" style="min-width: 550px;">
 <header class="w3-container w3-light-grey">
     <h3>No config file found</h3>
 </header>
