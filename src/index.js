@@ -1,6 +1,15 @@
 const home = require('./pages/home');
+const ipcRenderer = require('electron').ipcRenderer;
+let config; // Config object
+
 window.addEventListener('load', e => {
-    home.loadHome();
+    // Load the config
+    ipcRenderer.send('getConfig')
+    ipcRenderer.on('loadConfig', (event, args) => {
+        config = args.config;
+        // After the config is loaded, show the home page
+        home.loadHome(config);
+    });
 });
 
 /**
@@ -11,67 +20,67 @@ window.addEventListener('load', e => {
 const switchPage = (page) => {
     switch (page) {
         case 'home':
-            home.loadHome();
+            home.loadHome(config);
             return;
         case 'profile':
             const profile = require('./pages/profile');
-            profile.loadYourProfile();
+            profile.loadYourProfile(config);
             return;
         case 'aboutYou':
             const aboutYou = require('./pages/aboutYou');
-            aboutYou.loadAboutYou();
+            aboutYou.loadAboutYou(config);
             return;
         case 'followersAndFollowing':
             const followersAndFollowing = require('./pages/followersAndFollowing');
-            followersAndFollowing.loadFollowersAndFollowing();
+            followersAndFollowing.loadFollowersAndFollowing(config);
             return;
         case 'friends':
             const friends = require('./pages/friends');
-            friends.loadFriends();
+            friends.loadFriends(config);
             return;
         case 'messages':
             const messages = require('./pages/messages');
-            messages.loadMessages();
+            messages.loadMessages(config);
             return;
         case 'comments':
             const comments = require('./pages/comments');
-            comments.loadComments();
+            comments.loadComments(config);
             return;
         case 'media':
             const media = require('./pages/media');
-            media.loadMedia();
+            media.loadMedia(config);
             return;
         case 'ads':
             const ads = require('./pages/adverts');
-            ads.loadAds();
+            ads.loadAds(config);
             return;
         case 'apps':
             const appsWebsites = require('./pages/appsWebsites');
-            appsWebsites.loadAppsWebsites();
+            appsWebsites.loadAppsWebsites(config);
             return;
         case 'events':
             const events = require('./pages/events');
-            events.loadEvents();
+            events.loadEvents(config);
             return;
         case 'groups':
             const groups = require('./pages/groups');
-            groups.loadGroups();
+            groups.loadGroups(config);
             return;
         case 'security':
             const security = require('./pages/security');
-            security.loadSecurity();
+            security.loadSecurity(config);
             return;
         case 'saved':
             const saved = require('./pages/saved');
-            saved.loadSaved();
+            saved.loadSaved(config);
             return;
         case 'archive':
             const archive = require('./pages/archive');
-            archive.loadArchive();
+            archive.loadArchive(config);
             return;
         case 'about':
             const about = require('./pages/about');
-            about.loadAbout();
+            about.loadAbout(config);
             return;
         default:
             console.warn('Page ' + page + ' is invalid');

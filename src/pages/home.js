@@ -1,14 +1,15 @@
 const ipcRenderer = require('electron').ipcRenderer;
 const fs = require('fs');
 const isValidDataFolder = require('../utils/isValidDataFolder');
+const cC = require('../utils/camelCase')
 
 let dir; // Main data directory, to be saved in the config file.
-let config; // Config object
+// let config; // Config object
 
-ipcRenderer.send('getConfig')
-ipcRenderer.on('loadConfig', (event, args) => {
-    config = args.config;
-});
+// ipcRenderer.send('getConfig')
+// ipcRenderer.on('loadConfig', (event, args) => {
+//     config = args.config;
+// });
 
 /**
  * Listening for when the user selects a folder, and saves the config in a file
@@ -30,7 +31,7 @@ ipcRenderer.on('setDataDir', (event, args) => {
         ipcRenderer.send('saveConfig', {
             "config": config
         });
-        loadNormalHome();
+        loadNormalHome(config);
     } else {
         ipcRenderer.send('showWarning', {
             "title": "You must select a data directory!",
@@ -42,7 +43,7 @@ ipcRenderer.on('setDataDir', (event, args) => {
 /**
  * Load the page
  */
-const loadHome = async() => {
+const loadHome = async(config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');
@@ -64,7 +65,7 @@ const loadHome = async() => {
             await ipcRenderer.send('selectDataDir');
         });
     } else {
-        loadNormalHome();
+        loadNormalHome(config);
     }
 }
 
@@ -76,10 +77,10 @@ const changeTitle = () => {
 /**
  * Load the normal homepage
  */
-const loadNormalHome = async() => {
+const loadNormalHome = async(config) => {
     const page = document.getElementById('mainPage');
     page.innerHTML = "";
-    generateIgnoredFoldersCard(page);
+    generateIgnoredFoldersCard(page, config);
     const ignoreBtn = document.getElementById('howToIgnoreFolder');
     ignoreBtn.addEventListener('click', () => {
         // TODO: Show a help page
@@ -100,16 +101,14 @@ const getNews = async() => {
 
 /* Dynamic elements */
 
-const generateIgnoredFoldersCard = (page) => {
+const generateIgnoredFoldersCard = (page, config) => {
     if (config.ignoredFolders.length == 0) {
         page.innerHTML += noIgnoredFoldersCard;
     } else {
         let ignoredFoldersString = "";
         for (let index = 0; index < config.ignoredFolders.length; ++index) {
             let folder = config.ignoredFolders[index].replace('_', ' ');
-            // Camel case:
-            ignoredFoldersString += folder.charAt(0).toUpperCase();
-            ignoredFoldersString += folder.substr(1).toLowerCase();
+            ignoredFoldersString += cC.toCamelCase(folder);
             // Put a comma if element is not the last one
             ignoredFoldersString += (index == (config.ignoredFolders.length - 1)) ? '' : '?';
         }

@@ -5,9 +5,14 @@ const path = require('path');
  * Docs
  * 
  *  Load the config:
- *      ipcRenderer.send('getConfig')
+ *      ipcRenderer.send('getConfig');
  *      ipcRenderer.on('loadConfig', (event, args) => {
  *         config = args.config;
+ *      });
+ * 
+ *  Save the config:
+ *      ipcRenderer.send('saveConfig', {
+ *          config: configToSave
  *      });
  */
 
