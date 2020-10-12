@@ -131,7 +131,6 @@ const generateIgnoredFoldersCard = (page, config) => {
 }
 
 const generateNewsCard = (page, news) => {
-    let date = new Date(news.updated_on).toString().substr(0, 21);
     const newsCard = (`
     <div id="newsCard" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
         <header class="w3-container w3-light-grey" style="text-align: center;">
@@ -140,7 +139,7 @@ const generateNewsCard = (page, news) => {
         <div class="w3-container" style="margin-top: 12px;">
             <h5>${news.title}<h5>
             ${news.toRender}<br>
-            <small>Last updated on ${date}</small>
+            <small>Last updated on ${Date(news.updated_on).toString().substr(0, 21)}</small>
         </div>
     </div>
 

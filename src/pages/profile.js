@@ -52,6 +52,14 @@ class Profile {
         return `${this.userInfo.birthday.day} / ${this.userInfo.birthday.month} / ${this.userInfo.birthday.year}`;
     }
 
+    get userEducation() {
+        return this.userInfo.education_experiences;
+    }
+
+    get userSocials() {
+        return this.userInfo.screen_names;
+    }
+
     /**
      * Parse the profileHistory and search for a profile picture update
      * 
@@ -116,7 +124,7 @@ const generateFamilyInfo = (userProfile) => {
     let generatedHTML = "";
 
     familyMembers.forEach((member) => {
-        generatedHTML += `<p><i class="material-icons w3-margin-right ${randColor.getColor(true)}">person_outline</i>${member.relation} - ${member.name}</p>`;
+        generatedHTML += `<p><i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">person_outline</i>${member.relation} - ${member.name}</p>`;
     });
 
     return generatedHTML;
@@ -138,11 +146,11 @@ const generateLeftCollumn = (userProfile) => {
             </div>
             <div class="w3-container">
                 <!-- User Info -->
-                <p><i class="material-icons w3-margin-right w3-text-blue">location_city</i>${userProfile.userInfo.current_city.name}</p>
-                <p><i class="material-icons w3-margin-right w3-text-blue">email</i>${userProfile.userEmail}</p>
-                <p><i class="material-icons w3-margin-right w3-text-blue">date_range</i>${userProfile.userBirthdate}</p>
-                <p><i class="material-icons w3-margin-right w3-text-blue">people</i>${userProfile.userInfo.relationship.status}</p>
-                <p><i class="material-icons w3-margin-right w3-text-blue">person_pin</i>${cC.toCamelCase(userProfile.userInfo.gender.gender_option)}</p>
+                <p><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">location_city</i>${userProfile.userInfo.current_city.name}</p>
+                <p><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">email</i>${userProfile.userEmail}</p>
+                <p><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">date_range</i>${userProfile.userBirthdate}</p>
+                <p><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">people</i>${userProfile.userInfo.relationship.status}</p>
+                <p><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">person_pin</i>${cC.toCamelCase(userProfile.userInfo.gender.gender_option)}</p>
                 <hr>
                 <!-- User family -->
                 ${generateFamilyInfo(userProfile)}
@@ -153,24 +161,61 @@ const generateLeftCollumn = (userProfile) => {
 }
 
 const generateRightCollumn = (userProfile) => {
+    const generateEducationInfo = (userProfile) => {
+        educationInfo = "";
+        userProfile.userEducation.forEach((edu) => {
+            finishDate = edu.end_timestamp ? "Finished: " + new Date(edu.start_timestamp * 1000).toString().substr(0, 21) : "Currently enrolled"
+            educationInfo += `
+            <div class="w3-container">
+                <h5><b>${edu.school_type}</b> ${edu.name}</h5>
+                <h6><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">calendar_today</i>Started: ${new Date(edu.start_timestamp * 1000).toString().substr(0, 21)}</h6>
+                <h6><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">info</i>${finishDate}</h6>
+                <hr>
+            </div>
+            `
+        });
+        return educationInfo;
+    }
+
+    const generateHobbies = (userProfile) => {
+        hobbies = "";
+        userProfile.userHobbies.forEach((hobby) => {
+            hobbies += `
+                <div class="social-child w3-container w3-center w3-round-xlarge w3-border w3-border-black" style="min-width: 500px">
+                    <b>${hobby.data[0].profile_update.data}</b>, added on ${new Date(hobby.timestamp * 1000).toString().substr(0, 21)}
+                </div>
+                <br>
+            `
+        });
+        return hobbies;
+    }
+
+    const generateSocialInfo = (userProfile) => {
+        socialInfo = "";
+        userProfile.userSocials.forEach((social) => {
+            socialInfo += `
+                <div class="social-child w3-container w3-center w3-round-xlarge ${randColor.getColor()} w3-opacity-min project-link">${social.service_name}<br>${social.names[0].name}</div>
+            `
+        });
+        return socialInfo;
+    }
+
     return `
     <!-- Right column -->
     <div class="w3-twothird">
         <div class="w3-container w3-card w3-white w3-opacity-min">
-            <h2 class="w3-text-green w3-padding-16"><i class="fa fa-certificate fa-fw w3-margin-right w3-xxlarge w3-text-green"></i>Education</h2>
-            <div class="w3-container">
-                <h5><b>Nicolae Balcescu Lyceum, <small>Cluj-Napoca</small></b></h5>
-                <h6 class="w3-text-green"><i class="fa fa-calendar fa-fw w3-margin-right"></i>...2015 - 2019</h6>
-                <ul>
-                    <li>Awards:
-                        <br>
-                        <p2 class="job-desc">&nbsp&nbsp&nbsp&nbsp• 2x AstroPi Participant, once Finalists</p2>
-                        <br>
-                        <p2 class="job-desc">&nbsp&nbsp&nbsp&nbsp• 1st Place Kids Hack Day</p2>
-                    </li>
-                </ul>
-                <hr>
+            <h2 style="color: #4267B2; font-weight: bold;"><i class="w3-margin-right w3-xxlarge"></i>Education</h2>
+            ${generateEducationInfo(userProfile)}
+            <h2 style="color: #4267B2; font-weight: 600;"><i class="w3-margin-right w3-xxlarge"></i>Hobbies</h2>
+            <div class="hobbies">
+                ${generateHobbies(userProfile)}
             </div>
+            <hr>
+            <h2 style="color: #4267B2; font-weight: 600;"><i class="w3-margin-right w3-xxlarge"></i>Socials</h2>
+            <div class="socials">
+                ${generateSocialInfo(userProfile)}
+            </div>
+            <br>
         </div>
     </div>
     `;
