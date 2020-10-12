@@ -154,7 +154,7 @@ const generateNewsCard = (page, news) => {
 const noConfigCard = (`
 <div id="noConfigFound" class="w3-card-4 w3-margin-left w3-margin-right" style="min-width: 550px;">
 <header class="w3-container w3-light-grey">
-    <h3>No config file found</h3>
+    <h3>No config file found or the data folder coudn't be found!</h3>
 </header>
 <div class="w3-container" style="margin-top: 12px;">
     <i class="material-icons w3-left w3-circle w3-margin-right" style="color: #FB8C00; font-size: 48px;">warning</i>

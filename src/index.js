@@ -1,3 +1,4 @@
+const fs = require('fs');
 const home = require('./pages/home');
 const ipcRenderer = require('electron').ipcRenderer;
 let config; // Config object
@@ -7,8 +8,13 @@ window.addEventListener('load', e => {
     ipcRenderer.send('getConfig')
     ipcRenderer.on('loadConfig', (event, args) => {
         config = args.config;
-        // After the config is loaded, show the home page
-        home.loadHome(config);
+        if (fs.existsSync(config.dataPath)) {
+            // Config is valid
+            home.loadHome(config);
+        } else {
+            // Config is invalid
+            home.loadHome(null);
+        }
     });
 });
 

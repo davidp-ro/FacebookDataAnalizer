@@ -64,7 +64,11 @@ class Profile {
         this.foundURI = null;
         try {
             this.foundURI = this.config.profilePictureURI;
-            return this.foundURI;
+            if (this.foundURI != undefined) {
+                return this.foundURI;
+            } else {
+                this.foundURI = null;
+            }
         } catch (e) {
             console.log("No profile picture found URI in config, searching...")
         }
