@@ -7,7 +7,7 @@ const loadFollowersAndFollowing = (config) => {
     // Left off @ thinking how to organize view for followers
 
     const page = document.getElementById('mainPage');
-    page.innerHTML = `
+    page.innerHTML = /*html*/ `
     <div class="w3-card w3-margin-left w3-margin-right w3-margin-top w3-margin-bottom w3-light-grey">
         <div class="button-bar" style="margin-bottom: 0">
             <button id="followingBtn" class="w3-button w3-margin-left">Following</button>
@@ -63,14 +63,14 @@ const loadFollowing = (config, ctn) => {
             follower = following[index];
             if (index % 2 === 0) {
                 // Even, goes in column 1
-                leftColumn += `
+                leftColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${follower.name}, since ${new Date(follower.timestamp * 1000).toString().substr(0, 15)}
                 </p><br>`;
             } else {
                 // Odd, goes in column 2
-                rightColumn += `
+                rightColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${follower.name}, since ${new Date(follower.timestamp * 1000).toString().substr(0, 15)}
@@ -81,7 +81,7 @@ const loadFollowing = (config, ctn) => {
 
     generateData();
     ctn.innerHTML = '<h4 style="padding: 10px; margin-block-start: 0; margin-block-end: 0;">Theese are the people that you follow:</h4>'
-    ctn.innerHTML += `
+    ctn.innerHTML += /*html*/ `
     <div class="row w3-margin-left w3-margin-right">
         <div class="column">${leftColumn}</div>
         <div class="column">${rightColumn}</div>
@@ -106,14 +106,14 @@ const loadFollowers = (config, ctn) => {
             follower = followers[index];
             if (index % 2 === 0) {
                 // Even, goes in column 1
-                leftColumn += `
+                leftColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${follower.name}
                 </p><br>`;
             } else {
                 // Odd, goes in column 2
-                rightColumn += `
+                rightColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${follower.name}
@@ -124,7 +124,7 @@ const loadFollowers = (config, ctn) => {
 
     generateData();
     ctn.innerHTML = '<h4 style="padding: 10px; margin-block-start: 0; margin-block-end: 0;">Theese are the people follow you:</h4>'
-    ctn.innerHTML += `
+    ctn.innerHTML += /*html*/ `
     <div class="row w3-margin-left w3-margin-right">
         <div class="column">${leftColumn}</div>
         <div class="column">${rightColumn}</div>
@@ -155,14 +155,14 @@ const loadFollowedPages = (config, ctn) => {
             }
             if (index % 2 === 0) {
                 // Even, goes in column 1
-                leftColumn += `
+                leftColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${pageName}, since ${new Date(page.timestamp * 1000).toString().substr(0, 15)}
                 </p><br>`;
             } else {
                 // Odd, goes in column 2
-                rightColumn += `
+                rightColumn += /*html*/ `
                 <p>
                     <i class="material-icons w3-left w3-circle w3-margin-right ${randColor.getColor(true)}">api</i>
                     ${pageName}, since ${new Date(page.timestamp * 1000).toString().substr(0, 15)}
@@ -173,7 +173,7 @@ const loadFollowedPages = (config, ctn) => {
 
     generateData();
     ctn.innerHTML = '<h4 style="padding: 10px; margin-block-start: 0; margin-block-end: 0;">Theese are the pages that you follow:</h4>'
-    ctn.innerHTML += `
+    ctn.innerHTML += /*html*/ `
     <div class="row w3-margin-left w3-margin-right">
         <div class="column">${leftColumn}</div>
         <div class="column">${rightColumn}</div>

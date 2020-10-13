@@ -101,7 +101,7 @@ class Profile {
 const loadYourProfile = (config) => {
     changeTitle();
     const page = document.getElementById('mainPage');
-    page.innerHTML = `
+    page.innerHTML = /*html*/ `
     <div class="w3-content w3-margin-top" style="min-width:1000px;">
         <div id="profileGrid" class="w3-row-padding"></div>
     </div>
@@ -131,7 +131,7 @@ const generateFamilyInfo = (userProfile) => {
 }
 
 const generateLeftCollumn = (userProfile) => {
-    return `
+    return /*html*/ `
     <!-- Left column -->
     <div class="w3-third">
         <div class="w3-card-4 w3-white w3-opacity-min">
@@ -165,7 +165,7 @@ const generateRightCollumn = (userProfile) => {
         educationInfo = "";
         userProfile.userEducation.forEach((edu) => {
             finishDate = edu.end_timestamp ? "Finished: " + new Date(edu.start_timestamp * 1000).toString().substr(0, 21) : "Currently enrolled"
-            educationInfo += `
+            educationInfo += /*html*/ `
             <div class="w3-container">
                 <h5><b>${edu.school_type}</b> ${edu.name}</h5>
                 <h6><i class="material-icons w3-left w3-circle w3-margin-right w3-text-blue">calendar_today</i>Started: ${new Date(edu.start_timestamp * 1000).toString().substr(0, 21)}</h6>
@@ -180,7 +180,7 @@ const generateRightCollumn = (userProfile) => {
     const generateHobbies = (userProfile) => {
         hobbies = "";
         userProfile.userHobbies.forEach((hobby) => {
-            hobbies += `
+            hobbies += /*html*/ `
                 <div class="social-child w3-container w3-center w3-round-xlarge w3-border w3-border-black" style="min-width: 500px">
                     <b>${hobby.data[0].profile_update.data}</b>, added on ${new Date(hobby.timestamp * 1000).toString().substr(0, 21)}
                 </div>
@@ -193,14 +193,14 @@ const generateRightCollumn = (userProfile) => {
     const generateSocialInfo = (userProfile) => {
         socialInfo = "";
         userProfile.userSocials.forEach((social) => {
-            socialInfo += `
+            socialInfo += /*html*/ `
                 <div class="social-child w3-container w3-center w3-round-xlarge ${randColor.getColor()} w3-opacity-min project-link">${social.service_name}<br>${social.names[0].name}</div>
             `
         });
         return socialInfo;
     }
 
-    return `
+    return /*html*/ `
     <!-- Right column -->
     <div class="w3-twothird">
         <div class="w3-container w3-card w3-white w3-opacity-min">

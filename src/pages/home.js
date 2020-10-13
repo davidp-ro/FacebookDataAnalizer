@@ -106,7 +106,7 @@ const generateIgnoredFoldersCard = (page, config) => {
             // Put a comma if element is not the last one
             ignoredFoldersString += (index == (config.ignoredFolders.length - 1)) ? '' : '?';
         }
-        let ignoredFoldersCard = (`
+        const ignoredFoldersCard = /*html*/ `
         <div id="ignoredFolders" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
             <header class="w3-container w3-light-grey" style="text-align: center;">
                 <h3>You have set some folders to ignore: </h3>
@@ -117,7 +117,7 @@ const generateIgnoredFoldersCard = (page, config) => {
             </div>
             <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore / Un-Ignore a Folder</button>
         </div>
-        `);
+        `;
         page.innerHTML += ignoredFoldersCard;
     }
 
@@ -125,7 +125,7 @@ const generateIgnoredFoldersCard = (page, config) => {
 }
 
 const generateNewsCard = (page, news) => {
-    const newsCard = (`
+    const newsCard = /*html*/ `
     <div id="newsCard" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
         <header class="w3-container w3-light-grey" style="text-align: center;">
             <h3>Latest news</h3>
@@ -138,13 +138,13 @@ const generateNewsCard = (page, news) => {
     </div>
 
     <br>
-    `);
+    `;
     page.innerHTML += newsCard;
 }
 
 /* Static elements */
 
-const noConfigCard = (`
+const noConfigCard = /*html*/ `
 <div id="noConfigFound" class="w3-card-4 w3-margin-left w3-margin-right" style="min-width: 550px;">
 <header class="w3-container w3-light-grey">
     <h3>No config file found or the data folder coudn't be found!</h3>
@@ -156,9 +156,9 @@ const noConfigCard = (`
 <button id="howToDownloadData" class="w3-button w3-block w3-dark-grey">How To Download your data from Facebook</button>
 <button id="selectDataFolder" class="w3-button w3-block w3-dark-grey">Select folder</button>
 </div>
-`); // End of configCard
+`; // End of configCard
 
-const noIgnoredFoldersCard = (`
+const noIgnoredFoldersCard = /*html*/ `
 <div id="noIgnoredFolders" class="w3-card-4 w3-margin-left w3-margin-right w3-margin-top" style="min-width: 750px;">
     <header class="w3-container w3-light-grey" style="text-align: center;">
         <h3>Will scan all folders available</h3>
@@ -169,6 +169,6 @@ const noIgnoredFoldersCard = (`
     </div>
     <button id="howToIgnoreFolder" class="w3-button w3-block w3-dark-grey">How To Ignore a Folder</button>
 </div>
-`); // End of noIgnoredFoldersCard
+`; // End of noIgnoredFoldersCard
 
 exports.loadHome = loadHome;

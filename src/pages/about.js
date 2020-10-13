@@ -1,7 +1,7 @@
 const loadAbout = (config) => {
     changeTitle();
 
-    const content = `
+    const content = /*html*/ `
     <h2 style="color: #4267B2; font-weight: bold;">What even is this?</h2>
     <p style="font-size: 18px">
         &nbsp&nbspFacebook Data Visualizer is a small project I made mostly to learn how to use ElectronJS,
