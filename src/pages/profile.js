@@ -204,14 +204,14 @@ const generateRightCollumn = (userProfile) => {
     <!-- Right column -->
     <div class="w3-twothird">
         <div class="w3-container w3-card w3-white w3-opacity-min">
-            <h2 style="color: #4267B2; font-weight: bold;"><i class="w3-margin-right w3-xxlarge"></i>Education</h2>
+            <h2 style="color: #4267B2; font-weight: bold;">Education</h2>
             ${generateEducationInfo(userProfile)}
-            <h2 style="color: #4267B2; font-weight: 600;"><i class="w3-margin-right w3-xxlarge"></i>Hobbies</h2>
+            <h2 style="color: #4267B2; font-weight: 600;">Hobbies</h2>
             <div class="hobbies">
                 ${generateHobbies(userProfile)}
             </div>
             <hr>
-            <h2 style="color: #4267B2; font-weight: 600;"><i class="w3-margin-right w3-xxlarge"></i>Socials</h2>
+            <h2 style="color: #4267B2; font-weight: 600;">Socials</h2>
             <div class="socials">
                 ${generateSocialInfo(userProfile)}
             </div>

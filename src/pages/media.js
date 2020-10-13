@@ -1,4 +1,4 @@
-const loadMedia = () => {
+const loadMedia = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

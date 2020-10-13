@@ -1,4 +1,4 @@
-const loadSecurity = () => {
+const loadSecurity = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

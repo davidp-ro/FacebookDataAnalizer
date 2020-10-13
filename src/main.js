@@ -2,6 +2,11 @@ const { app, dialog, ipcMain, BrowserWindow } = require('electron');
 const path = require('path');
 
 /**
+ * TODOs
+ *  1. Error checking / page, ie. when it can't find a file
+ * 
+ * =============================================================================
+ * 
  * Docs
  * 
  *  Load the config:
@@ -65,7 +70,7 @@ let config = null;
  * Reads / Checks the config file
  * 
  * @returns {null} file does not exist
- * @returns {JSON Object} if it exists
+ * @returns {JSON} if it exists
  */
 const readConfig = () => {
     try {

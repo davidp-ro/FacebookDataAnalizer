@@ -1,4 +1,4 @@
-const loadFriends = () => {
+const loadFriends = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

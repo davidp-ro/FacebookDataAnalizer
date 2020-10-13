@@ -1,4 +1,4 @@
-const loadArchive = () => {
+const loadArchive = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

@@ -1,4 +1,4 @@
-const loadComments = () => {
+const loadComments = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

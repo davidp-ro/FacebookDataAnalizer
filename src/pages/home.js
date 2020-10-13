@@ -4,12 +4,6 @@ const isValidDataFolder = require('../utils/isValidDataFolder');
 const cC = require('../utils/camelCase')
 
 let dir; // Main data directory, to be saved in the config file.
-// let config; // Config object
-
-// ipcRenderer.send('getConfig')
-// ipcRenderer.on('loadConfig', (event, args) => {
-//     config = args.config;
-// });
 
 /**
  * Listening for when the user selects a folder, and saves the config in a file
@@ -92,7 +86,7 @@ const loadNormalHome = async(config) => {
 /**
  * Get the latest news from the repo
  * 
- * @returns {JSON Object} with the news
+ * @returns {JSON} with the news
  */
 const getNews = async() => {
     news = await fetch('https://raw.githubusercontent.com/davidp-ro/FacebookDataVisualizer/master/news.json');

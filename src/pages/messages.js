@@ -1,4 +1,4 @@
-const loadMessages = () => {
+const loadMessages = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

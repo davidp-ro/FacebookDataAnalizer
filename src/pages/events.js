@@ -1,4 +1,4 @@
-const loadEvents = () => {
+const loadEvents = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

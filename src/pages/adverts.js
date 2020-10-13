@@ -1,4 +1,4 @@
-const loadAds = () => {
+const loadAds = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

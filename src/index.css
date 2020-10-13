@@ -65,9 +65,23 @@ li {
     justify-content: center;
 }
 
+.button-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .social-child {
     max-width: 150px;
     margin-left: 10px;
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
 }
 
 footer {

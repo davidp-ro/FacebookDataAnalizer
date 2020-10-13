@@ -1,4 +1,4 @@
-const loadAboutYou = () => {
+const loadAboutYou = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

@@ -1,4 +1,4 @@
-const loadAppsWebsites = () => {
+const loadAppsWebsites = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

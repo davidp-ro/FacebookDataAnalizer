@@ -1,4 +1,4 @@
-const loadSaved = () => {
+const loadSaved = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

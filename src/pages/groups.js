@@ -1,4 +1,4 @@
-const loadGroups = () => {
+const loadGroups = (config) => {
     changeTitle();
 
     const page = document.getElementById('mainPage');

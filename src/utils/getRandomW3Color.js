@@ -3,7 +3,7 @@
  * 
  * Does not include very light colors!
  * 
- * @param {boolean} isTextColor, if true returns w3-text-...else w3-...
+ * @param {boolean} isTextColor if true returns w3-text-...else w3-...
  */
 const getColor = (isTextColor = false) => {
     const validColors = [
